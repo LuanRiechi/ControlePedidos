@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ControlePedidos</string>
+    <string name="lanche">Lanche:</string>
+    <string name="limpar">Limpar</string>
+    <string name="adicionais">Adicionais:</string>
+    <string name="batata">Batata Frita</string>
+    <string name="refrigerante">Refrigerante</string>
+    <string name="valor">Valor do pedido:</string>
+    <string name="salvar">Salvar</string>
+    <string name="erroLanche">Nome do lanche nao pode ser vazio</string>
+    <string name="camposLimpos">Campos de cadastro limpos!</string>
+    <string name="semAdicional">Sem adicionais selecionados</string>
+    <string name="adicionaisSelecionados">"Adicionais selecionados: "</string>
+    <string name="retirarlocal">Retirar no Local</string>
+    <string name="entregar">Entregar</string>
+    <string name="formaPagamento">Forma de Pagamento:</string>
+    <string name="cartao">Cartão</string>
+    <string name="dinehiro">Dinheiro</string>
+    <string name="pix">Pix</string>
+    <string name="erroFormaPagamento">Selecione uma forma de pagamento!</string>
+    <string name="autor">Luan Riechi de Carvalho</string>
+    <string name="curso">Engenharia de software</string>
+    <string name="email">luanriechi@alunos.utfpr.edu.br</string>
+    <string name="descricao">Aplicativo que faz o gerenciamento de pedidos de uma barraca que vende lanches, cadastrando os pedidos e os clientes</string>
+</resources>

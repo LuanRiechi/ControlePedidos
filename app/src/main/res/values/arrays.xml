@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="lanches">
+        <item>X-frango</item>
+        <item>X-salada</item>
+        <item>X-bacon</item>
+        <item>X-tudo</item>
+        <item>X-egg</item>
+        <item>X-calabresa</item>
+        <item>X-alcatra</item>
+        <item>dog-simples</item>
+        <item>dog-especial</item>
+        <item>dog-frango</item>
+    </string-array>
+
+    <string-array name="adicionais">
+        <item>Batata</item>
+        <item>Refri</item>
+        <item>Sem adicionais</item>
+        <item>Sem adicionais</item>
+        <item>Batata</item>
+        <item>Batata</item>
+        <item>Batata</item>
+        <item>Refri</item>
+        <item>Refri</item>
+        <item>Refri</item>
+    </string-array>
+
+    <string-array name="retiradas">
+        <item>Retirar</item>
+        <item>Retirar</item>
+        <item>Entrega</item>
+        <item>Entrega</item>
+        <item>Entrega</item>
+        <item>Entrega</item>
+        <item>Retirar</item>
+        <item>Retirar</item>
+        <item>Retirar</item>
+        <item>Retirar</item>
+    </string-array>
+
+    <string-array name="valores">
+        <item>12</item>
+        <item>13</item>
+        <item>18</item>
+        <item>18.50</item>
+        <item>20.50</item>
+        <item>22.50</item>
+        <item>22</item>
+        <item>24</item>
+        <item>15</item>
+        <item>16</item>
+    </string-array>
+
+    <string-array name="formaspagamentos">
+        <item>Dinheiro</item>
+        <item>Dinheiro</item>
+        <item>Dinheiro</item>
+        <item>Pix</item>
+        <item>Pix</item>
+        <item>Pix</item>
+        <item>Cartao</item>
+        <item>Cartao</item>
+        <item>Cartao</item>
+        <item>Cartao</item>
+    </string-array>
+
+
+</resources>
