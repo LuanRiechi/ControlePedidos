@@ -1,5 +1,6 @@
 package br.edu.utfpr.alunos.controlepedidos;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.NumberFormat;
@@ -18,7 +20,11 @@ public class ListaPedidos extends AppCompatActivity {
     private ListView listViewPedidos;
     private ArrayList<Pedido> pedidos;
 
+    private PedidoAdapter pedidoAdapter;
+
     private NumberFormat numberFormat;
+
+    public static final int CadastrarPedido = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,41 +68,37 @@ public class ListaPedidos extends AppCompatActivity {
     public void Adicionar (View view){
         Intent intent = new Intent(this, CadastrarPedido.class);
 
-        startActivity(intent);
+        startActivityForResult(intent, CadastrarPedido);
     }
 
-    private  void popularLista(){
-        String [] lanches = getResources().getStringArray(R.array.lanches);
-        String [] adicionais = getResources().getStringArray(R.array.adicionais);
-        String [] entregas = getResources().getStringArray(R.array.retiradas);
-        String [] valores = getResources().getStringArray(R.array.valores);
-        String [] formasPagamentos = getResources().getStringArray(R.array.formaspagamentos);
+    private   void popularLista(){
 
         pedidos = new ArrayList<>();
 
-        Pedido pedido;
-        String lanche;
-        String adicional;
-        String entrega;
-        float valorLanche;
-        String formaPagamento;
-
-        for (int i = 0; i < lanches.length; i++){
-            lanche = lanches[i];
-            adicional = adicionais[i];
-            entrega = entregas[i];
-            valorLanche = Float.parseFloat(valores[i]);
-            formaPagamento = formasPagamentos[i];
-
-            pedido = new Pedido(lanche,adicional,entrega,valorLanche,formaPagamento);
-
-
-            pedidos.add(pedido);
-        }
-
-        PedidoAdapter pedidoAdapter = new PedidoAdapter(this,pedidos);
+        pedidoAdapter = new PedidoAdapter(this,pedidos);
 
         listViewPedidos.setAdapter(pedidoAdapter);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == Activity.RESULT_OK){
+            Bundle bundle = data.getExtras();
+
+            String lanche = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.LANCHE);
+            String adicional = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ADICIONAIS);
+            String entrega = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ENTREGA);
+            Float valorLanche = Float.parseFloat(bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.VALOR));
+            String Pagamento = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.PAGAMENTO);
+
+            Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
+            pedidos.add(pedido);
+
+            pedidoAdapter.notifyDataSetChanged();
+
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

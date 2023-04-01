@@ -24,4 +24,6 @@
     <string name="descricao">Aplicativo que faz o gerenciamento de pedidos de uma barraquinha que vende lanches, cadastrando os pedidos e os clientes</string>
     <string name="sobre">Sobre</string>
     <string name="adicionar">Adicionar</string>
+    <string name="cadpedido">Cadastrar Pedido</string>
+    <string name="sobretitulo">informações sobre o app</string>
 </resources>

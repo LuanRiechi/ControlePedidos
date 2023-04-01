@@ -1,5 +1,7 @@
 package br.edu.utfpr.alunos.controlepedidos;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,12 @@ public class CadastrarPedido extends AppCompatActivity {
     private RadioGroup radioGroupRetirar;
     private Spinner spinnerPagamento;
 
+    public static final String LANCHE       = "LANCHE";
+    public static final String VALOR       = "VALOR";
+    public static final String ADICIONAIS       = "ADICIONAIS";
+    public static final String ENTREGA       = "ENTREGA";
+    public static final String PAGAMENTO       = "PAGAMENTO";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +40,7 @@ public class CadastrarPedido extends AppCompatActivity {
         spinnerPagamento = findViewById(R.id.spinnerPagamento);
 
         popularSpinner();
+        setTitle(getString(R.string.cadpedido));
 
     }
 
@@ -82,8 +91,6 @@ public class CadastrarPedido extends AppCompatActivity {
         }
         if (adicionais.equals("")) {
             adicionais = getString(R.string.semAdicional);
-        } else {
-            adicionais = getString(R.string.adicionaisSelecionados) + " " + adicionais;
         }
 
         switch (radioGroupRetirar.getCheckedRadioButtonId()){
@@ -114,7 +121,25 @@ public class CadastrarPedido extends AppCompatActivity {
             pagamento = getString(R.string.erroFormaPagamento);
         }
 
-        Toast.makeText(this, lanche.trim() + "\n" + adicionais +"\n"+radioGroupMensagem+ "\n"+pagamento+"\n"+valor.trim(),Toast.LENGTH_LONG).show();
+        Intent intent = new Intent();
+        intent.putExtra(LANCHE, lanche);
+        intent.putExtra(ADICIONAIS, adicionais);
+        intent.putExtra(ENTREGA, radioGroupMensagem);
+        intent.putExtra(VALOR, valor);
+        intent.putExtra(PAGAMENTO, pagamento);
+
+        setResult(Activity.RESULT_OK, intent);
+
+        finish();
+
+
+//        Toast.makeText(this, lanche.trim() + "\n" + adicionais +"\n"+radioGroupMensagem+ "\n"+pagamento+"\n"+valor.trim(),Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
 }
