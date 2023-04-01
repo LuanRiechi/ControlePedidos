@@ -1,5 +1,6 @@
 package br.edu.utfpr.alunos.controlepedidos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,6 +51,18 @@ public class ListaPedidos extends AppCompatActivity {
 
         popularLista();
 
+    }
+
+    public void Sobre (View view){
+        Intent intent = new Intent(this, sobreAPP.class);
+
+        startActivity(intent);
+    }
+
+    public void Adicionar (View view){
+        Intent intent = new Intent(this, CadastrarPedido.class);
+
+        startActivity(intent);
     }
 
     private  void popularLista(){

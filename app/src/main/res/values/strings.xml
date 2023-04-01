@@ -21,5 +21,7 @@
     <string name="autor">Luan Riechi de Carvalho</string>
     <string name="curso">Engenharia de software</string>
     <string name="email">luanriechi@alunos.utfpr.edu.br</string>
-    <string name="descricao">Aplicativo que faz o gerenciamento de pedidos de uma barraca que vende lanches, cadastrando os pedidos e os clientes</string>
+    <string name="descricao">Aplicativo que faz o gerenciamento de pedidos de uma barraquinha que vende lanches, cadastrando os pedidos e os clientes</string>
+    <string name="sobre">Sobre</string>
+    <string name="adicionar">Adicionar</string>
 </resources>

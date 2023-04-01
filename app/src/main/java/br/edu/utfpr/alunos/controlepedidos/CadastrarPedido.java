@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class CadastrarPedido extends AppCompatActivity {
 
     private EditText editTextLanche, ediTextValor;
     private CheckBox checboxBatata, checboxRefrigerante;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_cadastro_pedido);
         editTextLanche = findViewById(R.id.editTextLanche);
         checboxBatata = findViewById(R.id.checkBoxBatata);
         checboxRefrigerante = findViewById(R.id.checkBoxRefrigerante);

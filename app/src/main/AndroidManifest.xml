@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".CadastrarPedido"
             android:exported="true">
         </activity>
     </application>
