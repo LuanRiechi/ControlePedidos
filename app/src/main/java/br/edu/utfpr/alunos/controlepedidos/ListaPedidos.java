@@ -2,8 +2,11 @@ package br.edu.utfpr.alunos.controlepedidos;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -33,6 +36,57 @@ public class ListaPedidos extends AppCompatActivity {
 
     public static final int CadastrarPedido = 1;
 
+    private ActionMode actionMode;
+
+    private int posicaoSelecionada = -1;
+
+    private View viewSelecionada;
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflate = mode.getMenuInflater();
+            inflate.inflate(R.menu.item_selecionado,menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem menuItem) {
+
+            switch (menuItem.getItemId()){
+
+                case R.id.menuItemEditar:
+                    mode.finish();
+                    return true;
+
+                case R.id.menuItemExcluir:
+                    mode.finish();
+                    ExcluirPedido();
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+
+            if (viewSelecionada != null){
+                viewSelecionada.setBackgroundColor(Color.TRANSPARENT);
+            }
+            actionMode = null;
+            viewSelecionada = null;
+            listViewPedidos.setEnabled(true);
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +107,8 @@ public class ListaPedidos extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                        posicaoSelecionada = i;
+
                         Pedido pedido = (Pedido) listViewPedidos.getItemAtPosition(i);
 
                         String valorFormatado = numberFormat.format(pedido.getValor());
@@ -64,6 +120,25 @@ public class ListaPedidos extends AppCompatActivity {
                                         + getString(R.string.valor)+" "+valorFormatado+ "\n"
                                         + getString(R.string.formaPagamento)+" "+ pedido.getFormapagamento()
                                 , Toast.LENGTH_LONG).show();
+                    }
+                }
+
+        );
+        listViewPedidos.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        listViewPedidos.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        if(actionMode !=null){
+                            return false;
+                        }
+                        posicaoSelecionada = i;
+                        view.setBackgroundColor(Color.LTGRAY);
+                        viewSelecionada = view;
+                        listViewPedidos.setEnabled(false);
+                        actionMode = startActionMode(mActionModeCallback);
+                        return true;
                     }
                 }
         );
@@ -94,6 +169,12 @@ public class ListaPedidos extends AppCompatActivity {
         Intent intent = new Intent(this, CadastrarPedido.class);
 
         startActivityForResult(intent, CadastrarPedido);
+    }
+
+    public void ExcluirPedido(){
+        pedidos.remove(posicaoSelecionada);
+        pedidoAdapter.notifyDataSetChanged();
+
     }
 
 

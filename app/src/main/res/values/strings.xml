@@ -26,4 +26,6 @@
     <string name="adicionar">Adicionar</string>
     <string name="cadpedido">Cadastrar Pedido</string>
     <string name="sobretitulo">informações sobre o app</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
 </resources>
