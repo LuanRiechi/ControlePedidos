@@ -2,6 +2,9 @@ package br.edu.utfpr.alunos.controlepedidos;
 
 public class Pedido {
 
+    private static  int sequencia = 0;
+
+    private int id;
     private String lanche;
     private String adicional;
     private String entrega;
@@ -9,11 +12,16 @@ public class Pedido {
     private String formapagamento;
 
     public Pedido(String lanche, String adicional, String entrega, Float valor, String formapagamento){
+        this.id = sequencia++;
         setLanche(lanche);
         setAdicional(adicional);
         setEntrega(entrega);
         setValor(valor);
         setFormapagamento(formapagamento);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getLanche() {

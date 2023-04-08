@@ -3,8 +3,11 @@ package br.edu.utfpr.alunos.controlepedidos;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,6 +27,10 @@ public class ListaPedidos extends AppCompatActivity {
 
     private NumberFormat numberFormat;
 
+    private Button btnAdcionar;
+
+    private Button btnSobre;
+
     public static final int CadastrarPedido = 1;
 
     @Override
@@ -32,6 +39,12 @@ public class ListaPedidos extends AppCompatActivity {
         setContentView(R.layout.activity_lista_pedidos);
 
         listViewPedidos = findViewById(R.id.ListaPedidos);
+
+        btnAdcionar = findViewById(R.id.btnAdicionar);
+        btnAdcionar.setVisibility(View.INVISIBLE);
+        btnSobre = findViewById(R.id.btnSobre);
+        btnSobre.setVisibility(View.INVISIBLE);
+
 
         numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
 
@@ -44,7 +57,7 @@ public class ListaPedidos extends AppCompatActivity {
 
                         String valorFormatado = numberFormat.format(pedido.getValor());
 
-                        Toast.makeText(getApplicationContext(),
+                        Toast.makeText(getApplicationContext(),pedido.getId()+ "\n"+
                                 getString(R.string.lanche)+" "+pedido.getLanche()+"\n"
                                         +getString(R.string.adicionais)+" "+pedido.getAdicional()+ "\n"
                                         +pedido.getEntrega()+ "\n"
@@ -65,11 +78,24 @@ public class ListaPedidos extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void SobreMenu (MenuItem item){
+        Intent intent = new Intent(this, sobreAPP.class);
+
+        startActivity(intent);
+    }
+
     public void Adicionar (View view){
         Intent intent = new Intent(this, CadastrarPedido.class);
 
         startActivityForResult(intent, CadastrarPedido);
     }
+
+    public void AdicionarMenu (MenuItem item){
+        Intent intent = new Intent(this, CadastrarPedido.class);
+
+        startActivityForResult(intent, CadastrarPedido);
+    }
+
 
     private   void popularLista(){
 
@@ -101,4 +127,11 @@ public class ListaPedidos extends AppCompatActivity {
 
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.lista_opcoes, menu);
+        return true;
+    }
+
 }
