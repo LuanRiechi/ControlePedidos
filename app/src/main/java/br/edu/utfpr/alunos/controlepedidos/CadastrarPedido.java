@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
@@ -155,7 +156,7 @@ public class CadastrarPedido extends AppCompatActivity {
         editTextLanche.requestFocus();
     }
 
-    public void limparCamposMenu (MenuItem item){
+    public void limparCamposMenu (){
         editTextLanche.setText(null);
         checboxBatata.setChecked(false);
         checboxRefrigerante.setChecked(false);
@@ -236,7 +237,7 @@ public class CadastrarPedido extends AppCompatActivity {
 //        Toast.makeText(this, lanche.trim() + "\n" + adicionais +"\n"+radioGroupMensagem+ "\n"+pagamento+"\n"+valor.trim(),Toast.LENGTH_LONG).show();
     }
 
-    public void salvarMenu (MenuItem item){
+    public void salvarMenu (){
         String lanche = editTextLanche.getText().toString();
         String valor = ediTextValor.getText().toString();
         String adicionais = "";
@@ -315,4 +316,23 @@ public class CadastrarPedido extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menuItemSalvar:
+                salvarMenu();
+                return true;
+
+            case R.id.menuItemLimpar:
+                limparCamposMenu();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
