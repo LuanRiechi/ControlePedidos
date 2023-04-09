@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,11 +30,38 @@ public class CadastrarPedido extends AppCompatActivity {
 
     private Button btnLimpar;
 
+    public static final String ID       = "ID";
     public static final String LANCHE       = "LANCHE";
     public static final String VALOR       = "VALOR";
     public static final String ADICIONAIS       = "ADICIONAIS";
     public static final String ENTREGA       = "ENTREGA";
     public static final String PAGAMENTO       = "PAGAMENTO";
+
+    public static final String MODO = "MODO";
+    public static final int NOVO = 1;
+    public static final int ALTERAR = 2;
+
+    private int modo;
+
+    public static void novoPedido (AppCompatActivity activity){
+        Intent intent = new Intent(activity,CadastrarPedido.class);
+        intent.putExtra(MODO, NOVO);
+        activity.startActivityForResult(intent,NOVO);
+    }
+
+    public static void alterarPedido (AppCompatActivity activity, Pedido pedido){
+        Intent intent = new Intent(activity, CadastrarPedido.class);
+        intent.putExtra(MODO, ALTERAR);
+
+        intent.putExtra(ID, pedido.getId());
+        intent.putExtra(LANCHE, pedido.getLanche());
+        intent.putExtra(ADICIONAIS, pedido.getAdicional());
+        intent.putExtra(ENTREGA, pedido.getEntrega());
+        intent.putExtra(VALOR, pedido.getValor());
+        intent.putExtra(PAGAMENTO, pedido.getFormapagamento());
+
+        activity.startActivityForResult(intent, ALTERAR);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +80,55 @@ public class CadastrarPedido extends AppCompatActivity {
         btnLimpar.setVisibility(View.INVISIBLE);
 
         popularSpinner();
-        setTitle(getString(R.string.cadpedido));
+
+
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null){
+            modo = bundle.getInt(MODO);
+            if(modo == NOVO){
+                setTitle(getString(R.string.cadpedido));
+            }else {
+                editTextLanche.setText(bundle.getString(LANCHE));
+                String adicional = bundle.getString(ADICIONAIS);
+                if (adicional.equals(getString(R.string.batata) + " ")){
+                    checboxBatata.setChecked(true);
+                }
+                if (adicional.equals(getString(R.string.refrigerante) + " ")){
+                    checboxRefrigerante.setChecked(true);
+                }
+                if (adicional.equals( getString(R.string.batata) + " " + getString(R.string.refrigerante) + " ")){
+                    checboxRefrigerante.setChecked(true);
+                    checboxBatata.setChecked(true);
+                }
+                String entrega = bundle.getString(ENTREGA);
+                RadioButton button;
+
+                if (entrega.equals(getString(R.string.retirarlocal))){
+                    button = findViewById(R.id.radioButtonRetirar);
+                    button.setChecked(true);
+                }else{
+                    button = findViewById(R.id.radioButtonEntregar);
+                    button.setChecked(true);
+                }
+
+                ediTextValor.setText(String.valueOf(bundle.getFloat(VALOR)));
+
+                String pagamento = bundle.getString(PAGAMENTO);
+
+                for (int pos = 0; pos <spinnerPagamento.getAdapter().getCount(); pos++){
+                    String valor = (String) spinnerPagamento.getItemAtPosition(pos);
+                    if (valor.equals(pagamento)){
+                        spinnerPagamento.setSelection(pos);
+                        break;
+                    }
+
+                }
+                setTitle(getString(R.string.editapedido));
+            }
+        }
 
     }
 

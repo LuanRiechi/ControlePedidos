@@ -11,7 +11,7 @@
     <string name="camposLimpos">Campos de cadastro limpos!</string>
     <string name="semAdicional">Sem adicionais selecionados</string>
     <string name="adicionaisSelecionados">"Adicionais selecionados: "</string>
-    <string name="retirarlocal">Retirar no Local</string>
+    <string name="retirarlocal">Retirar no local</string>
     <string name="entregar">Entregar</string>
     <string name="formaPagamento">Forma de Pagamento:</string>
     <string name="cartao">Cartão</string>
@@ -28,4 +28,5 @@
     <string name="sobretitulo">informações sobre o app</string>
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
+    <string name="editapedido">Editar pedido</string>
 </resources>

@@ -61,6 +61,7 @@ public class ListaPedidos extends AppCompatActivity {
             switch (menuItem.getItemId()){
 
                 case R.id.menuItemEditar:
+                    alterar();
                     mode.finish();
                     return true;
 
@@ -166,9 +167,13 @@ public class ListaPedidos extends AppCompatActivity {
     }
 
     public void AdicionarMenu (MenuItem item){
-        Intent intent = new Intent(this, CadastrarPedido.class);
+        br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
+    }
 
-        startActivityForResult(intent, CadastrarPedido);
+    public void alterar (){
+        Pedido pedido = pedidos.get(posicaoSelecionada);
+
+        br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.alterarPedido(this,pedido);
     }
 
     public void ExcluirPedido(){
@@ -199,8 +204,22 @@ public class ListaPedidos extends AppCompatActivity {
             Float valorLanche = Float.parseFloat(bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.VALOR));
             String Pagamento = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.PAGAMENTO);
 
-            Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
-            pedidos.add(pedido);
+            if (requestCode == br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ALTERAR){
+                Pedido pedido = pedidos.get(posicaoSelecionada);
+                pedido.setLanche(lanche);
+                pedido.setAdicional(adicional);
+                pedido.setEntrega(entrega);
+                pedido.setValor(valorLanche);
+                pedido.setFormapagamento(Pagamento);
+
+                posicaoSelecionada = -1;
+
+            }else{
+                Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
+                pedidos.add(pedido);
+            }
+
+
 
             pedidoAdapter.notifyDataSetChanged();
 
