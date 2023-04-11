@@ -77,8 +77,6 @@ public class CadastrarPedido extends AppCompatActivity {
 
         btnSalvar = findViewById(R.id.btnSalvar);
         btnLimpar = findViewById(R.id.btnLimpar);
-        btnSalvar.setVisibility(View.INVISIBLE);
-        btnLimpar.setVisibility(View.INVISIBLE);
 
         popularSpinner();
 
@@ -180,7 +178,7 @@ public class CadastrarPedido extends AppCompatActivity {
             editTextLanche.requestFocus();
             return;
 
-            }
+        }
 
 
         if (checboxBatata.isChecked() ){
@@ -208,13 +206,13 @@ public class CadastrarPedido extends AppCompatActivity {
                 radioGroupMensagem = "";
         }
         if (radioGroupMensagem == ""){
-            Toast.makeText(this, "Selecione uma forma de retirar o pedido!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erroRetirar, Toast.LENGTH_LONG).show();
             radioGroupRetirar.requestFocus();
             return;
         }
 
         if (valor == null || valor.trim().isEmpty()) {
-            Toast.makeText(this, "valor nao pode ser vazio", Toast.LENGTH_LONG ).show();
+            Toast.makeText(this, R.string.erroValor, Toast.LENGTH_LONG ).show();
             return;
         }
 
@@ -233,8 +231,6 @@ public class CadastrarPedido extends AppCompatActivity {
 
         finish();
 
-
-//        Toast.makeText(this, lanche.trim() + "\n" + adicionais +"\n"+radioGroupMensagem+ "\n"+pagamento+"\n"+valor.trim(),Toast.LENGTH_LONG).show();
     }
 
     public void salvarMenu (){

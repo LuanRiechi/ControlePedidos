@@ -1,7 +1,9 @@
 package br.edu.utfpr.alunos.controlepedidos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -14,8 +16,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -34,13 +38,17 @@ public class ListaPedidos extends AppCompatActivity {
 
     private Button btnSobre;
 
-    public static final int CadastrarPedido = 1;
-
     private ActionMode actionMode;
 
     private int posicaoSelecionada = -1;
 
     private View viewSelecionada;
+
+    private static final String ARQUVIO = "br.edu.utfpr.alunos.controlepedidos.PREFERENCIAS_TEMA";
+
+    private static final String TEMA = "TEMA";
+
+    private int temaApp = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
@@ -96,9 +104,10 @@ public class ListaPedidos extends AppCompatActivity {
         listViewPedidos = findViewById(R.id.ListaPedidos);
 
         btnAdcionar = findViewById(R.id.btnAdicionar);
-        btnAdcionar.setVisibility(View.INVISIBLE);
         btnSobre = findViewById(R.id.btnSobre);
-        btnSobre.setVisibility(View.INVISIBLE);
+
+
+        lerpreferenciaTema();
 
 
         numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
@@ -161,9 +170,7 @@ public class ListaPedidos extends AppCompatActivity {
     }
 
     public void Adicionar (View view){
-        Intent intent = new Intent(this, CadastrarPedido.class);
-
-        startActivityForResult(intent, CadastrarPedido);
+        br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
     }
 
     public void AdicionarMenu (MenuItem item){
@@ -234,4 +241,60 @@ public class ListaPedidos extends AppCompatActivity {
         return true;
     }
 
+    public void salvarPreferenciaTema(int novoTema){
+        SharedPreferences shared = getSharedPreferences(ARQUVIO, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = shared.edit();
+
+        editor.putInt(TEMA, novoTema);
+        editor.commit();
+        temaApp = novoTema;
+
+        AppCompatDelegate.setDefaultNightMode(temaApp);
+    }
+
+    public void lerpreferenciaTema (){
+        SharedPreferences shared = getSharedPreferences(ARQUVIO,Context.MODE_PRIVATE);
+        temaApp = shared.getInt(TEMA, temaApp);
+
+        AppCompatDelegate.setDefaultNightMode(temaApp);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch(item.getItemId()){
+
+            case R.id.menuItemEscuro:
+                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_YES);
+                return true;
+
+            case R.id.menuItemClaro:
+                salvarPreferenciaTema(AppCompatDelegate.MODE_NIGHT_NO);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item;
+        switch (temaApp){
+
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                item = menu.findItem(R.id.menuItemEscuro);
+                break;
+
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                item = menu.findItem(R.id.menuItemClaro);
+                break;
+
+            default:
+                return false;
+        }
+        item.setChecked(true);
+        return true;
+    }
 }

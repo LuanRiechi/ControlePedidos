@@ -12,4 +12,14 @@
         android:id="@+id/menuItemSobre"
         android:onClick="SobreMenu"
         android:title="@string/sobre" />
+    <group
+        android:id="@+id/grupoTema"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuItemEscuro"
+            android:title="@string/temaEscuro" />
+        <item
+            android:id="@+id/menuItemClaro"
+            android:title="@string/temaClaro" />
+    </group>
 </menu>

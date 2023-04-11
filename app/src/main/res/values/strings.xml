@@ -31,4 +31,6 @@
     <string name="editar">Edit</string>
     <string name="excluir">Delete</string>
     <string name="editapedido">Edit order</string>
+    <string name="temaClaro">Light Theme</string>
+    <string name="temaEscuro">Dark Theme</string>
 </resources>

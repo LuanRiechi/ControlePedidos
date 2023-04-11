@@ -30,4 +30,6 @@
     <string name="editar">Editar</string>
     <string name="excluir">Excluir</string>
     <string name="editapedido">Editar pedido</string>
+    <string name="temaClaro">Tema Claro</string>
+    <string name="temaEscuro">Tema Escuro</string>
 </resources>
