@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -75,8 +74,6 @@ public class CadastrarPedido extends AppCompatActivity {
         radioGroupRetirar = findViewById(R.id.RadioGroupRetirar);
         spinnerPagamento = findViewById(R.id.spinnerPagamento);
 
-        btnSalvar = findViewById(R.id.btnSalvar);
-        btnLimpar = findViewById(R.id.btnLimpar);
 
         popularSpinner();
 
@@ -142,17 +139,7 @@ public class CadastrarPedido extends AppCompatActivity {
         spinnerPagamento.setAdapter(adapter);
     }
 
-    public void limparCampos (View view){
-        editTextLanche.setText(null);
-        checboxBatata.setChecked(false);
-        checboxRefrigerante.setChecked(false);
-        ediTextValor.setText(null);
-        radioGroupRetirar.clearCheck();
 
-        Toast.makeText(this, R.string.camposLimpos, Toast.LENGTH_LONG).show();
-
-        editTextLanche.requestFocus();
-    }
 
     public void limparCamposMenu (){
         editTextLanche.setText(null);
@@ -166,72 +153,6 @@ public class CadastrarPedido extends AppCompatActivity {
         editTextLanche.requestFocus();
     }
 
-    public void salvar (View view){
-        String lanche = editTextLanche.getText().toString();
-        String valor = ediTextValor.getText().toString();
-        String adicionais = "";
-        String radioGroupMensagem = "";
-        String pagamento = (String) spinnerPagamento.getSelectedItem();
-
-        if (lanche == null || lanche.trim().isEmpty()){
-            Toast.makeText(this, R.string.erroLanche, Toast.LENGTH_LONG).show();
-            editTextLanche.requestFocus();
-            return;
-
-        }
-
-
-        if (checboxBatata.isChecked() ){
-            adicionais += getString(R.string.batata) + " ";
-
-        }
-        if (checboxRefrigerante.isChecked()) {
-            adicionais += getString(R.string.refrigerante) + " ";
-        }
-        if (adicionais.equals("")) {
-            adicionais = getString(R.string.semAdicional);
-        }
-
-        switch (radioGroupRetirar.getCheckedRadioButtonId()){
-
-            case R.id.radioButtonRetirar:
-                radioGroupMensagem = getString(R.string.retirarlocal);
-                break;
-
-            case R.id.radioButtonEntregar:
-                radioGroupMensagem = getString(R.string.entregar);
-                break;
-
-            default:
-                radioGroupMensagem = "";
-        }
-        if (radioGroupMensagem == ""){
-            Toast.makeText(this, R.string.erroRetirar, Toast.LENGTH_LONG).show();
-            radioGroupRetirar.requestFocus();
-            return;
-        }
-
-        if (valor == null || valor.trim().isEmpty()) {
-            Toast.makeText(this, R.string.erroValor, Toast.LENGTH_LONG ).show();
-            return;
-        }
-
-        if(pagamento == null){
-            pagamento = getString(R.string.erroFormaPagamento);
-        }
-
-        Intent intent = new Intent();
-        intent.putExtra(LANCHE, lanche);
-        intent.putExtra(ADICIONAIS, adicionais);
-        intent.putExtra(ENTREGA, radioGroupMensagem);
-        intent.putExtra(VALOR, valor);
-        intent.putExtra(PAGAMENTO, pagamento);
-
-        setResult(Activity.RESULT_OK, intent);
-
-        finish();
-
-    }
 
     public void salvarMenu (){
         String lanche = editTextLanche.getText().toString();
@@ -280,6 +201,7 @@ public class CadastrarPedido extends AppCompatActivity {
 
         if (valor == null || valor.trim().isEmpty()) {
             Toast.makeText(this, R.string.erroValor, Toast.LENGTH_LONG ).show();
+            ediTextValor.requestFocus();
             return;
         }
 

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.text.NumberFormat;
 import java.util.List;
-import java.util.Locale;
 
 public class PedidoAdapter extends BaseAdapter {
     private Context context;
@@ -28,7 +27,7 @@ public class PedidoAdapter extends BaseAdapter {
         this.context = context;
         this.pedidos = pedidos;
 
-        numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+        numberFormat = NumberFormat.getCurrencyInstance();
     }
 
     @Override

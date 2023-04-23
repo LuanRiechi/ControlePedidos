@@ -82,20 +82,16 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/formaPagamento"
-        app:layout_constraintStart_toEndOf="@+id/textViewAdicional"
+        app:layout_constraintStart_toStartOf="@+id/textViewRetirada"
         app:layout_constraintTop_toBottomOf="@+id/textViewRetirada" />
 
     <TextView
         android:id="@+id/textViewFormaPagamento"
         android:layout_width="139dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/textViewValor"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 </androidx.constraintlayout.widget.ConstraintLayout>

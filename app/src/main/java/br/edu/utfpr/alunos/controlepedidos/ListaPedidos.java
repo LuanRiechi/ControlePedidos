@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class ListaPedidos extends AppCompatActivity {
 
@@ -103,14 +102,12 @@ public class ListaPedidos extends AppCompatActivity {
 
         listViewPedidos = findViewById(R.id.ListaPedidos);
 
-        btnAdcionar = findViewById(R.id.btnAdicionar);
-        btnSobre = findViewById(R.id.btnSobre);
 
 
         lerpreferenciaTema();
 
 
-        numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+        numberFormat = NumberFormat.getCurrencyInstance();
 
         listViewPedidos.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
@@ -157,11 +154,7 @@ public class ListaPedidos extends AppCompatActivity {
 
     }
 
-    public void Sobre (View view){
-        Intent intent = new Intent(this, sobreAPP.class);
 
-        startActivity(intent);
-    }
 
     public void SobreMenu (MenuItem item){
         Intent intent = new Intent(this, sobreAPP.class);
@@ -169,9 +162,6 @@ public class ListaPedidos extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void Adicionar (View view){
-        br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
-    }
 
     public void AdicionarMenu (MenuItem item){
         br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
