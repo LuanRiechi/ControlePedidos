@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -26,9 +25,6 @@ public class CadastrarPedido extends AppCompatActivity {
     private RadioGroup radioGroupRetirar;
     private Spinner spinnerPagamento;
 
-    private Button btnSalvar;
-
-    private Button btnLimpar;
 
     public static final String ID       = "ID";
     public static final String LANCHE       = "LANCHE";
