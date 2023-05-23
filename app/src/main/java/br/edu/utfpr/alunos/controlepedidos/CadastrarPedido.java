@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
+import br.edu.utfpr.alunos.controlepedidos.modelo.Pedido;
+import br.edu.utfpr.alunos.controlepedidos.persistencia.PedidosDatabase;
+
 public class CadastrarPedido extends AppCompatActivity {
 
     private EditText editTextLanche, ediTextValor;
@@ -36,6 +39,7 @@ public class CadastrarPedido extends AppCompatActivity {
     public static final String MODO = "MODO";
     public static final int NOVO = 1;
     public static final int ALTERAR = 2;
+    private Pedido pedido;
 
     private int modo;
 
@@ -157,6 +161,7 @@ public class CadastrarPedido extends AppCompatActivity {
         String radioGroupMensagem = "";
         String pagamento = (String) spinnerPagamento.getSelectedItem();
 
+
         if (lanche == null || lanche.trim().isEmpty()){
             Toast.makeText(this, R.string.erroLanche, Toast.LENGTH_LONG).show();
             editTextLanche.requestFocus();
@@ -205,14 +210,23 @@ public class CadastrarPedido extends AppCompatActivity {
             pagamento = getString(R.string.erroFormaPagamento);
         }
 
-        Intent intent = new Intent();
-        intent.putExtra(LANCHE, lanche);
-        intent.putExtra(ADICIONAIS, adicionais);
-        intent.putExtra(ENTREGA, radioGroupMensagem);
-        intent.putExtra(VALOR, valor);
-        intent.putExtra(PAGAMENTO, pagamento);
+        Float valorLanche = Float.parseFloat(valor);
+        pedido = new Pedido(lanche,adicionais,radioGroupMensagem,valorLanche,pagamento);
 
-        setResult(Activity.RESULT_OK, intent);
+//        Intent intent = new Intent();
+//        intent.putExtra(LANCHE, lanche);
+//        intent.putExtra(ADICIONAIS, adicionais);
+//        intent.putExtra(ENTREGA, radioGroupMensagem);
+//        intent.putExtra(VALOR, valor);
+//        intent.putExtra(PAGAMENTO, pagamento);
+
+        PedidosDatabase database = PedidosDatabase.getDatabase(this);
+
+        if (modo == NOVO){
+            database.pedidoDAO().insert(pedido);
+        }
+
+        setResult(Activity.RESULT_OK);
 
         finish();
 

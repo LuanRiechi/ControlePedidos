@@ -21,12 +21,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
+import java.util.List;
+
+import br.edu.utfpr.alunos.controlepedidos.modelo.Pedido;
+import br.edu.utfpr.alunos.controlepedidos.persistencia.PedidosDatabase;
 
 public class ListaPedidos extends AppCompatActivity {
 
     private ListView listViewPedidos;
-    private ArrayList<Pedido> pedidos;
+    private List<Pedido> pedidos;
 
     private PedidoAdapter pedidoAdapter;
 
@@ -178,7 +181,9 @@ public class ListaPedidos extends AppCompatActivity {
 
     private   void popularLista(){
 
-        pedidos = new ArrayList<>();
+        PedidosDatabase database = PedidosDatabase.getDatabase(this);
+
+        pedidos = database.pedidoDAO().queryAll();
 
         pedidoAdapter = new PedidoAdapter(this,pedidos);
 
@@ -188,34 +193,38 @@ public class ListaPedidos extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == Activity.RESULT_OK){
-            Bundle bundle = data.getExtras();
+//        if (resultCode == Activity.RESULT_OK){
+//            Bundle bundle = data.getExtras();
+//
+//            String lanche = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.LANCHE);
+//            String adicional = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ADICIONAIS);
+//            String entrega = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ENTREGA);
+//            Float valorLanche = Float.parseFloat(bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.VALOR));
+//            String Pagamento = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.PAGAMENTO);
+//
+//            if (requestCode == br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ALTERAR){
+//                Pedido pedido = pedidos.get(posicaoSelecionada);
+//                pedido.setLanche(lanche);
+//                pedido.setAdicional(adicional);
+//                pedido.setEntrega(entrega);
+//                pedido.setValor(valorLanche);
+//                pedido.setFormapagamento(Pagamento);
+//
+//                posicaoSelecionada = -1;
+//
+//            }else{
+//                Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
+//                pedidos.add(pedido);
+//            }
+//
+//
+//
+//            pedidoAdapter.notifyDataSetChanged();
+//
+//        }
 
-            String lanche = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.LANCHE);
-            String adicional = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ADICIONAIS);
-            String entrega = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ENTREGA);
-            Float valorLanche = Float.parseFloat(bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.VALOR));
-            String Pagamento = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.PAGAMENTO);
-
-            if (requestCode == br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ALTERAR){
-                Pedido pedido = pedidos.get(posicaoSelecionada);
-                pedido.setLanche(lanche);
-                pedido.setAdicional(adicional);
-                pedido.setEntrega(entrega);
-                pedido.setValor(valorLanche);
-                pedido.setFormapagamento(Pagamento);
-
-                posicaoSelecionada = -1;
-
-            }else{
-                Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
-                pedidos.add(pedido);
-            }
-
-
-
-            pedidoAdapter.notifyDataSetChanged();
-
+        if((requestCode == CadastrarPedido.ALTERAR || requestCode == CadastrarPedido.NOVO) && resultCode == Activity.RESULT_OK){
+            popularLista();
         }
 
         super.onActivityResult(requestCode, resultCode, data);

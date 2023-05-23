@@ -1,18 +1,27 @@
-package br.edu.utfpr.alunos.controlepedidos;
+package br.edu.utfpr.alunos.controlepedidos.modelo;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Pedido {
 
-    private static  int sequencia = 0;
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @NonNull
     private String lanche;
     private String adicional;
+    @NonNull
     private String entrega;
+    @NonNull
     private Float valor;
+    @NonNull
     private String formapagamento;
 
     public Pedido(String lanche, String adicional, String entrega, Float valor, String formapagamento){
-        this.id = sequencia++;
         setLanche(lanche);
         setAdicional(adicional);
         setEntrega(entrega);
@@ -22,6 +31,10 @@ public class Pedido {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLanche() {

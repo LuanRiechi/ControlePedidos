@@ -10,6 +10,8 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.List;
 
+import br.edu.utfpr.alunos.controlepedidos.modelo.Pedido;
+
 public class PedidoAdapter extends BaseAdapter {
     private Context context;
     private List<Pedido> pedidos;
