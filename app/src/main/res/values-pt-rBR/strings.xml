@@ -32,4 +32,8 @@
     <string name="editapedido">Editar pedido</string>
     <string name="temaClaro">Tema Claro</string>
     <string name="temaEscuro">Tema Escuro</string>
+    <string name="confirmacao">Confimacao</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Nao</string>
+    <string name="mensagemAlerta">Deseja realmente excluir esse pedido?</string>
 </resources>

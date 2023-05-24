@@ -2,6 +2,7 @@ package br.edu.utfpr.alunos.controlepedidos;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -173,13 +175,27 @@ public class ListaPedidos extends AppCompatActivity {
     }
 
     public void ExcluirPedido(){
-        Pedido pedido = pedidos.get(posicaoSelecionada);
-        PedidosDatabase database = PedidosDatabase.getDatabase(this);
-        database.pedidoDAO().delete(pedido);
 
-        pedidos.remove(posicaoSelecionada);
-        pedidoAdapter.notifyDataSetChanged();
+        String mensagemAlerta = getString(R.string.mensagemAlerta);
 
+        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                switch (i){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Pedido pedido = pedidos.get(posicaoSelecionada);
+                        PedidosDatabase database = PedidosDatabase.getDatabase(ListaPedidos.this);
+                        database.pedidoDAO().delete(pedido);
+
+                        pedidos.remove(posicaoSelecionada);
+                        pedidoAdapter.notifyDataSetChanged();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            }
+        };
+        confirmacaoAlert(this,mensagemAlerta,listener);
     }
 
 
@@ -264,5 +280,20 @@ public class ListaPedidos extends AppCompatActivity {
         }
         item.setChecked(true);
         return true;
+    }
+
+    public void confirmacaoAlert (Context contexto, String mensagem, DialogInterface.OnClickListener listener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+
+        builder.setTitle(R.string.confirmacao);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+
+        builder.setMessage(mensagem);
+
+        builder.setPositiveButton(R.string.sim, listener);
+        builder.setNegativeButton(R.string.nao, listener);
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
