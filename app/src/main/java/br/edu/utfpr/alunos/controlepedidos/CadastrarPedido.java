@@ -30,11 +30,6 @@ public class CadastrarPedido extends AppCompatActivity {
 
 
     public static final String ID       = "ID";
-    public static final String LANCHE       = "LANCHE";
-    public static final String VALOR       = "VALOR";
-    public static final String ADICIONAIS       = "ADICIONAIS";
-    public static final String ENTREGA       = "ENTREGA";
-    public static final String PAGAMENTO       = "PAGAMENTO";
 
     public static final String MODO = "MODO";
     public static final int NOVO = 1;
@@ -54,11 +49,6 @@ public class CadastrarPedido extends AppCompatActivity {
         intent.putExtra(MODO, ALTERAR);
 
         intent.putExtra(ID, pedido.getId());
-        intent.putExtra(LANCHE, pedido.getLanche());
-        intent.putExtra(ADICIONAIS, pedido.getAdicional());
-        intent.putExtra(ENTREGA, pedido.getEntrega());
-        intent.putExtra(VALOR, pedido.getValor());
-        intent.putExtra(PAGAMENTO, pedido.getFormapagamento());
 
         activity.startActivityForResult(intent, ALTERAR);
     }
@@ -87,8 +77,14 @@ public class CadastrarPedido extends AppCompatActivity {
             if(modo == NOVO){
                 setTitle(getString(R.string.cadpedido));
             }else {
-                editTextLanche.setText(bundle.getString(LANCHE));
-                String adicional = bundle.getString(ADICIONAIS);
+                int id = bundle.getInt(ID);
+
+                PedidosDatabase database = PedidosDatabase.getDatabase(this);
+
+                pedido = database.pedidoDAO().queryForId(id);
+
+                editTextLanche.setText(pedido.getLanche());
+                String adicional = pedido.getAdicional();
                 if (adicional.equals(getString(R.string.batata) + " ")){
                     checboxBatata.setChecked(true);
                 }
@@ -99,7 +95,7 @@ public class CadastrarPedido extends AppCompatActivity {
                     checboxRefrigerante.setChecked(true);
                     checboxBatata.setChecked(true);
                 }
-                String entrega = bundle.getString(ENTREGA);
+                String entrega = pedido.getEntrega();
                 RadioButton button;
 
                 if (entrega.equals(getString(R.string.retirarlocal))){
@@ -110,9 +106,9 @@ public class CadastrarPedido extends AppCompatActivity {
                     button.setChecked(true);
                 }
 
-                ediTextValor.setText(String.valueOf(bundle.getFloat(VALOR)));
+                ediTextValor.setText(String.valueOf(pedido.getValor()));
 
-                String pagamento = bundle.getString(PAGAMENTO);
+                String pagamento = pedido.getFormapagamento();
 
                 for (int pos = 0; pos <spinnerPagamento.getAdapter().getCount(); pos++){
                     String valor = (String) spinnerPagamento.getItemAtPosition(pos);
@@ -211,19 +207,22 @@ public class CadastrarPedido extends AppCompatActivity {
         }
 
         Float valorLanche = Float.parseFloat(valor);
-        pedido = new Pedido(lanche,adicionais,radioGroupMensagem,valorLanche,pagamento);
 
-//        Intent intent = new Intent();
-//        intent.putExtra(LANCHE, lanche);
-//        intent.putExtra(ADICIONAIS, adicionais);
-//        intent.putExtra(ENTREGA, radioGroupMensagem);
-//        intent.putExtra(VALOR, valor);
-//        intent.putExtra(PAGAMENTO, pagamento);
+
 
         PedidosDatabase database = PedidosDatabase.getDatabase(this);
 
         if (modo == NOVO){
+            pedido = new Pedido(lanche,adicionais,radioGroupMensagem,valorLanche,pagamento);
             database.pedidoDAO().insert(pedido);
+        }else {
+            pedido.setLanche(lanche);
+            pedido.setAdicional(adicionais);
+            pedido.setEntrega(radioGroupMensagem);
+            pedido.setValor(valorLanche);
+            pedido.setFormapagamento(pagamento);
+            database.pedidoDAO().update(pedido);
+
         }
 
         setResult(Activity.RESULT_OK);

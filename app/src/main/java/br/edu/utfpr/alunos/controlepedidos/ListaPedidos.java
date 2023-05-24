@@ -173,6 +173,10 @@ public class ListaPedidos extends AppCompatActivity {
     }
 
     public void ExcluirPedido(){
+        Pedido pedido = pedidos.get(posicaoSelecionada);
+        PedidosDatabase database = PedidosDatabase.getDatabase(this);
+        database.pedidoDAO().delete(pedido);
+
         pedidos.remove(posicaoSelecionada);
         pedidoAdapter.notifyDataSetChanged();
 
@@ -193,40 +197,9 @@ public class ListaPedidos extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        if (resultCode == Activity.RESULT_OK){
-//            Bundle bundle = data.getExtras();
-//
-//            String lanche = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.LANCHE);
-//            String adicional = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ADICIONAIS);
-//            String entrega = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ENTREGA);
-//            Float valorLanche = Float.parseFloat(bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.VALOR));
-//            String Pagamento = bundle.getString(br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.PAGAMENTO);
-//
-//            if (requestCode == br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.ALTERAR){
-//                Pedido pedido = pedidos.get(posicaoSelecionada);
-//                pedido.setLanche(lanche);
-//                pedido.setAdicional(adicional);
-//                pedido.setEntrega(entrega);
-//                pedido.setValor(valorLanche);
-//                pedido.setFormapagamento(Pagamento);
-//
-//                posicaoSelecionada = -1;
-//
-//            }else{
-//                Pedido pedido = new Pedido(lanche,adicional,entrega,valorLanche,Pagamento);
-//                pedidos.add(pedido);
-//            }
-//
-//
-//
-//            pedidoAdapter.notifyDataSetChanged();
-//
-//        }
-
-        if((requestCode == CadastrarPedido.ALTERAR || requestCode == CadastrarPedido.NOVO) && resultCode == Activity.RESULT_OK){
+        if((requestCode == CadastrarPedido.ALTERAR ||requestCode == CadastrarPedido.NOVO) && resultCode == Activity.RESULT_OK){
             popularLista();
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
