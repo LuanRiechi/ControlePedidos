@@ -6,11 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import br.edu.utfpr.alunos.controlepedidos.modelo.Lanche;
 import br.edu.utfpr.alunos.controlepedidos.modelo.Pedido;
 
-@Database(entities = {Pedido.class}, version = 1,exportSchema = false)
+@Database(entities = {Pedido.class, Lanche.class}, version = 1,exportSchema = false)
 public abstract class PedidosDatabase extends RoomDatabase {
     public abstract PedidoDAO pedidoDAO();
+
+    public abstract LancheDAO lancheDAO();
 
     private static PedidosDatabase instance;
 

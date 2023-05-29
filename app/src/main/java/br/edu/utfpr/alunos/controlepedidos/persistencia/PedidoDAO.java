@@ -21,9 +21,12 @@ public interface PedidoDAO {
     @Update
     void update(Pedido pedido);
 
-    @Query("SELECT * FROM pedido WHERE id = :id")
+    @Query("SELECT * FROM pedidos WHERE id = :id")
     Pedido queryForId(long id);
 
-    @Query("SELECT * FROM pedido ")
+    @Query("SELECT * FROM pedidos ")
     List<Pedido> queryAll();
+
+    @Query("SELECT count(*) FROM pedidos WHERE lancheNome = :lanche LIMIT 1")
+    int queryForLancheNome(String lanche);
 }

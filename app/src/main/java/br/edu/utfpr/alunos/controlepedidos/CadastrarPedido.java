@@ -17,16 +17,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import br.edu.utfpr.alunos.controlepedidos.modelo.Lanche;
 import br.edu.utfpr.alunos.controlepedidos.modelo.Pedido;
 import br.edu.utfpr.alunos.controlepedidos.persistencia.PedidosDatabase;
 
 public class CadastrarPedido extends AppCompatActivity {
 
-    private EditText editTextLanche, ediTextValor;
+    private EditText ediTextValor;
     private CheckBox checboxBatata, checboxRefrigerante;
     private RadioGroup radioGroupRetirar;
-    private Spinner spinnerPagamento;
+    private Spinner spinnerPagamento, spinnerLanche;
+
+    private List<Lanche> listaLanches;
 
 
     public static final String ID       = "ID";
@@ -57,7 +61,7 @@ public class CadastrarPedido extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_pedido);
-        editTextLanche = findViewById(R.id.editTextLanche);
+        spinnerLanche = findViewById(R.id.spinnerLanche);
         checboxBatata = findViewById(R.id.checkBoxBatata);
         checboxRefrigerante = findViewById(R.id.checkBoxRefrigerante);
         ediTextValor = findViewById(R.id.editTextValor);
@@ -66,6 +70,8 @@ public class CadastrarPedido extends AppCompatActivity {
 
 
         popularSpinner();
+
+        carregaSpinnerLanche();
 
 
         Intent intent = getIntent();
@@ -83,7 +89,7 @@ public class CadastrarPedido extends AppCompatActivity {
 
                 pedido = database.pedidoDAO().queryForId(id);
 
-                editTextLanche.setText(pedido.getLanche());
+//                editTextLanche.setText(pedido.getLanche());
                 String adicional = pedido.getAdicional();
                 if (adicional.equals(getString(R.string.batata) + " ")){
                     checboxBatata.setChecked(true);
@@ -118,6 +124,15 @@ public class CadastrarPedido extends AppCompatActivity {
                     }
 
                 }
+                String nomeLanche = pedido.getLancheNome();
+                for (int pos = 0; pos <spinnerLanche.getAdapter().getCount(); pos++){
+                    Lanche lanche = (Lanche) spinnerLanche.getItemAtPosition(pos);
+                    if (lanche.getNome().equals(nomeLanche)){
+                        spinnerLanche.setSelection(pos);
+                        break;
+                    }
+
+                }
                 setTitle(getString(R.string.editapedido));
             }
         }
@@ -135,10 +150,17 @@ public class CadastrarPedido extends AppCompatActivity {
         spinnerPagamento.setAdapter(adapter);
     }
 
+    private void carregaSpinnerLanche(){
+        PedidosDatabase database = PedidosDatabase.getDatabase(this);
+        listaLanches = database.lancheDAO().queryAll();
+        ArrayAdapter<Lanche> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,listaLanches);
+        spinnerLanche.setAdapter(spinnerAdapter);
+    }
+
 
 
     public void limparCamposMenu (){
-        editTextLanche.setText(null);
+//        editTextLanche.setText(null);
         checboxBatata.setChecked(false);
         checboxRefrigerante.setChecked(false);
         ediTextValor.setText(null);
@@ -146,24 +168,25 @@ public class CadastrarPedido extends AppCompatActivity {
 
         Toast.makeText(this, R.string.camposLimpos, Toast.LENGTH_LONG).show();
 
-        editTextLanche.requestFocus();
+//        editTextLanche.requestFocus();
     }
 
 
     public void salvarMenu (){
-        String lanche = editTextLanche.getText().toString();
+        Lanche lanche = (Lanche) spinnerLanche.getSelectedItem();
+        String lancheNome = lanche.getNome();
         String valor = ediTextValor.getText().toString();
         String adicionais = "";
         String radioGroupMensagem = "";
         String pagamento = (String) spinnerPagamento.getSelectedItem();
 
 
-        if (lanche == null || lanche.trim().isEmpty()){
-            Toast.makeText(this, R.string.erroLanche, Toast.LENGTH_LONG).show();
-            editTextLanche.requestFocus();
-            return;
-
-        }
+//        if (lanche == null || lanche.trim().isEmpty()){
+//            Toast.makeText(this, R.string.erroLanche, Toast.LENGTH_LONG).show();
+//            editTextLanche.requestFocus();
+//            return;
+//
+//        }
 
 
         if (checboxBatata.isChecked() ){
@@ -213,10 +236,10 @@ public class CadastrarPedido extends AppCompatActivity {
         PedidosDatabase database = PedidosDatabase.getDatabase(this);
 
         if (modo == NOVO){
-            pedido = new Pedido(lanche,adicionais,radioGroupMensagem,valorLanche,pagamento);
+            pedido = new Pedido(lancheNome,adicionais,radioGroupMensagem,valorLanche,pagamento);
             database.pedidoDAO().insert(pedido);
         }else {
-            pedido.setLanche(lanche);
+            pedido.setLancheNome(lancheNome);
             pedido.setAdicional(adicionais);
             pedido.setEntrega(radioGroupMensagem);
             pedido.setValor(valorLanche);

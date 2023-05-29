@@ -1,18 +1,23 @@
 package br.edu.utfpr.alunos.controlepedidos.modelo;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity (tableName = "pedidos",
+            foreignKeys = @ForeignKey(entity = Lanche.class,
+                                        parentColumns = "nome",
+                                        childColumns = "lancheNome"))
 public class Pedido {
 
 
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    @NonNull
-    private String lanche;
+    @ColumnInfo(index = true)
+    private String lancheNome;
     private String adicional;
     @NonNull
     private String entrega;
@@ -21,8 +26,8 @@ public class Pedido {
     @NonNull
     private String formapagamento;
 
-    public Pedido(String lanche, String adicional, String entrega, Float valor, String formapagamento){
-        setLanche(lanche);
+    public Pedido(String lancheNome, String adicional, String entrega, Float valor, String formapagamento){
+        setLancheNome(lancheNome);
         setAdicional(adicional);
         setEntrega(entrega);
         setValor(valor);
@@ -37,12 +42,12 @@ public class Pedido {
         this.id = id;
     }
 
-    public String getLanche() {
-        return lanche;
+    public String getLancheNome() {
+        return lancheNome;
     }
 
-    public void setLanche(String lanche) {
-        this.lanche = lanche;
+    public void setLancheNome(String lancheNome) {
+        this.lancheNome = lancheNome;
     }
 
     public String getAdicional() {

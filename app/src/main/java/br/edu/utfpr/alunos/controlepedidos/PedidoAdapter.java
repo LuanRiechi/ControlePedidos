@@ -70,7 +70,7 @@ public class PedidoAdapter extends BaseAdapter {
             holder = (PedidoHolder) view.getTag();
         }
 
-        holder.textViewLanche.setText(pedidos.get(i).getLanche());
+        holder.textViewLanche.setText(pedidos.get(i).getLancheNome());
 
         holder.textViewAdcionais.setText(pedidos.get(i).getAdicional());
 

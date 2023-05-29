@@ -12,9 +12,17 @@
         android:theme="@style/Theme.ControlePedidos"
         tools:targetApi="31">
         <activity
-            android:name=".sobreAPP"
+            android:name=".CadastrarLanche"
             android:exported="false"
             android:parentActivityName=".ListaPedidos"/>
+        <activity
+            android:name=".ListaLanches"
+            android:exported="false"
+            android:parentActivityName=".ListaPedidos" />
+        <activity
+            android:name=".sobreAPP"
+            android:exported="false"
+            android:parentActivityName=".ListaPedidos" />
         <activity
             android:name=".ListaPedidos"
             android:exported="true">
@@ -27,8 +35,7 @@
         <activity
             android:name=".CadastrarPedido"
             android:exported="true"
-            android:parentActivityName=".ListaPedidos">
-        </activity>
+            android:parentActivityName=".ListaPedidos" />
     </application>
 
 </manifest>

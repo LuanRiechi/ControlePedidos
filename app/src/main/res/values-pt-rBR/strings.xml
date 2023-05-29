@@ -36,4 +36,9 @@
     <string name="sim">Sim</string>
     <string name="nao">Nao</string>
     <string name="mensagemAlerta">Deseja realmente excluir esse pedido?</string>
+    <string name="lanches">Lanches</string>
+    <string name="lancheExistente">ja existe um lanche com esse nome, escolha outro!</string>
+    <string name="aviso">Aviso</string>
+    <string name="ok">Ok</string>
+    <string name="semLancheAlerta">não é possivel cadastrar um pedido sem antes ter um lanche cadastrado!</string>
 </resources>

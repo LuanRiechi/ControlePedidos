@@ -122,7 +122,7 @@ public class ListaPedidos extends AppCompatActivity {
                         String valorFormatado = numberFormat.format(pedido.getValor());
 
                         Toast.makeText(getApplicationContext(),pedido.getId()+ "\n"+
-                                getString(R.string.lanche)+" "+pedido.getLanche()+"\n"
+                                getString(R.string.lanche)+" "+pedido.getLancheNome()+"\n"
                                         +getString(R.string.adicionais)+" "+pedido.getAdicional()+ "\n"
                                         +pedido.getEntrega()+ "\n"
                                         + getString(R.string.valor)+" "+valorFormatado+ "\n"
@@ -163,9 +163,24 @@ public class ListaPedidos extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void LanchesMenu (MenuItem item){
+        Intent intent = new Intent(this, ListaLanches.class);
+
+        startActivity(intent);
+    }
+
 
     public void AdicionarMenu (MenuItem item){
-        br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
+
+        PedidosDatabase database = PedidosDatabase.getDatabase(this);
+        int totalLanche = database.lancheDAO().total();
+
+        if (totalLanche == 0){
+            avisoSemLanche(this,R.string.semLancheAlerta);
+        } else {
+            br.edu.utfpr.alunos.controlepedidos.CadastrarPedido.novoPedido(this);
+        }
+
     }
 
     public void alterar (){
@@ -292,6 +307,26 @@ public class ListaPedidos extends AppCompatActivity {
 
         builder.setPositiveButton(R.string.sim, listener);
         builder.setNegativeButton(R.string.nao, listener);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public  void avisoSemLanche(Context contexto, int idTexto){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(contexto);
+
+        builder.setTitle(R.string.aviso);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setMessage(idTexto);
+
+        builder.setNeutralButton(R.string.ok,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
 
         AlertDialog alert = builder.create();
         alert.show();

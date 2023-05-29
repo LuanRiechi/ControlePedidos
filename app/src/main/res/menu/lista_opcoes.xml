@@ -9,6 +9,10 @@
         android:title="@string/adicionar"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/menuitemLanches"
+        android:onClick="LanchesMenu"
+        android:title="@string/lanches" />
+    <item
         android:id="@+id/menuItemSobre"
         android:onClick="SobreMenu"
         android:title="@string/sobre" />

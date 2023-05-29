@@ -37,4 +37,9 @@
     <string name="sim">Yes</string>
     <string name="nao">No</string>
     <string name="mensagemAlerta">Do you want to delete this order?</string>
+    <string name="lanches">Hot dogs</string>
+    <string name="lancheExistente">A hot dog with that name already exists, choose another name!</string>
+    <string name="aviso">Alert</string>
+    <string name="ok">Ok</string>
+    <string name="semLancheAlerta">it is not possible to register an order without first having a hot dog registered!</string>
 </resources>
