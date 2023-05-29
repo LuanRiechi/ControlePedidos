@@ -42,4 +42,8 @@
     <string name="aviso">Alert</string>
     <string name="ok">Ok</string>
     <string name="semLancheAlerta">it is not possible to register an order without first having a hot dog registered!</string>
+    <string name="lancheUsado">It is not possible to delete this hot dog because it is being used.</string>
+    <string name="excluirLanche">Do you want to delete this hot dog?</string>
+    <string name="registrarLanche">Register hot dog</string>
+    <string name="alterarLanche">Edit hot dog</string>
 </resources>

@@ -41,4 +41,8 @@
     <string name="aviso">Aviso</string>
     <string name="ok">Ok</string>
     <string name="semLancheAlerta">não é possivel cadastrar um pedido sem antes ter um lanche cadastrado!</string>
+    <string name="lancheUsado">Não é possivel excluir esse lanche pois ele esta sendo usado.</string>
+    <string name="excluirLanche">Deseja excluir esse lanche?</string>
+    <string name="registrarLanche">Registar lanche</string>
+    <string name="alterarLanche">Alterar lanche</string>
 </resources>

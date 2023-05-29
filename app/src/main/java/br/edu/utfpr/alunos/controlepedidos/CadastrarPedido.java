@@ -180,15 +180,6 @@ public class CadastrarPedido extends AppCompatActivity {
         String radioGroupMensagem = "";
         String pagamento = (String) spinnerPagamento.getSelectedItem();
 
-
-//        if (lanche == null || lanche.trim().isEmpty()){
-//            Toast.makeText(this, R.string.erroLanche, Toast.LENGTH_LONG).show();
-//            editTextLanche.requestFocus();
-//            return;
-//
-//        }
-
-
         if (checboxBatata.isChecked() ){
             adicionais += getString(R.string.batata) + " ";
 
@@ -230,8 +221,6 @@ public class CadastrarPedido extends AppCompatActivity {
         }
 
         Float valorLanche = Float.parseFloat(valor);
-
-
 
         PedidosDatabase database = PedidosDatabase.getDatabase(this);
 

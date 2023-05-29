@@ -24,6 +24,8 @@ public class CadastrarLanche extends AppCompatActivity {
     public static final int NOVO = 1;
     public static final int ALTERAR = 2;
 
+    private Lanche lanche;
+
     private int modo;
 
     public static void novoLanche (AppCompatActivity activity){
@@ -48,6 +50,24 @@ public class CadastrarLanche extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_lanche);
         editTextLanche = findViewById(R.id.editTextLancheNome);
 
+
+        Intent intent = getIntent();
+
+        Bundle bundle = intent.getExtras();
+
+        if (bundle != null) {
+            modo = bundle.getInt(MODO);
+            if (modo == NOVO) {
+                setTitle(getString(R.string.registrarLanche));
+            } else {
+                setTitle(getString(R.string.alterarLanche));
+                String nomeLanche = bundle.getString(NOME);
+                PedidosDatabase database = PedidosDatabase.getDatabase(this);
+                lanche = database.lancheDAO().queryforLanche(nomeLanche);
+                editTextLanche.setText(lanche.getNome());
+            }
+        }
+
     }
     public void limparCamposMenu (){
         editTextLanche.setText(null);
@@ -68,20 +88,31 @@ public class CadastrarLanche extends AppCompatActivity {
             return;
 
         }else {
-
-            Lanche lanche = new Lanche(nome);
-            int contador = database.lancheDAO().queryforNome(nome);
+            int contador = database.lancheDAO().queryforcountLancheName(nome);
             if (contador > 0 ){
                 Toast.makeText(this, R.string.lancheExistente, Toast.LENGTH_LONG).show();
                 editTextLanche.requestFocus();
             }else {
-                database.lancheDAO().insert(lanche);
+                if (modo == NOVO) {
+                    lanche = new Lanche(nome);
+                    database.lancheDAO().insert(lanche);
+                } else {
+                    lanche.setNome(nome);
+                    database.lancheDAO().update(lanche);
+                }
+
+                setResult(Activity.RESULT_OK);
+                finish();
             }
 
-            setResult(Activity.RESULT_OK);
-            finish();
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        finish();
     }
 
     @Override

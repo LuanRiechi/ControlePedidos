@@ -22,7 +22,10 @@ public interface LancheDAO {
     void update (Lanche lanche);
 
     @Query("SELECT count(*) FROM lanches WHERE nome = :nome LIMIT 1")
-    int queryforNome(String nome);
+    int queryforcountLancheName(String nome);
+
+    @Query("SELECT * FROM lanches WHERE nome = :nome")
+    Lanche queryforLanche(String nome);
 
     @Query("SELECT * FROM lanches")
     List<Lanche> queryAll();
